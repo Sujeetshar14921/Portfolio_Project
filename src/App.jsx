@@ -19,7 +19,7 @@ export default function App() {
   }, [])
 
   const [email, setEmail] = useState(()=> localStorage.getItem('visitorEmail') || null)
-  const [modalOpen, setModalOpen] = useState(()=> !localStorage.getItem('visitorEmail'))
+  const [modalOpen, setModalOpen] = useState(false)
   const [hireModalOpen, setHireModalOpen] = useState(false)
 
   const hire = () => {
@@ -44,6 +44,8 @@ export default function App() {
 
       <main className='mx-4 my-10'>
         <Routes>
+          <Route path="/Portfolio_Project/" element={<Home />} />
+          <Route path="/Portfolio_Project/projects" element={<Projects />} />
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
         </Routes>

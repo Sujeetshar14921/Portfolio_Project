@@ -10,7 +10,7 @@ import './index.css'
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Portfolio_Project">
         <App />
       </BrowserRouter>
     </HelmetProvider>
