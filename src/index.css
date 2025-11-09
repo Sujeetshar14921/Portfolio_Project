@@ -1,0 +1,238 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Unified Liquid Glass theme variables */
+  --brand-color: #5dd3d3; /* single brand color used everywhere */
+  --brand-rgb: 93,211,211; /* RGB tuple for rgba() uses */
+
+  /* Minimalistic light background */
+  --bg: linear-gradient(180deg,#ffffff 0%, #f7fbfb 100%);
+
+  --page-text: #071126;
+  --card-bg: rgba(255,255,255,0.14);
+  --card-border: rgba(255,255,255,0.18);
+  --accent-start: var(--brand-color);
+  --accent-end: var(--brand-color);
+  --btn-shadow: 0 14px 40px rgba(var(--brand-rgb),0.12);
+  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.28), rgba(255,255,255,0.02));
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  background-image: var(--bg);
+  color: var(--page-text);
+  @apply antialiased;
+  font-family: Poppins, Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Theme variants still available but they reuse brand color so everything stays consistent */
+[data-theme="modern"] {
+  /* Liquid Glass modern — same brand color */
+  --bg: radial-gradient(900px 700px at 8% 18%, rgba(var(--brand-rgb),0.14), transparent 12%),
+         radial-gradient(700px 520px at 92% 82%, rgba(var(--brand-rgb),0.10), transparent 14%),
+         linear-gradient(180deg,#eef9fb 0%, #f7feff 40%, #f1fdff 100%);
+  --page-text: #071126;
+  --card-bg: rgba(255,255,255,0.14);
+  --card-border: rgba(255,255,255,0.18);
+  --btn-shadow: 0 14px 40px rgba(var(--brand-rgb),0.12);
+}
+
+[data-theme="minimal"] {
+  --bg: linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
+  --page-text: #0b1220;
+  --card-bg: rgba(255,255,255,0.12);
+  --card-border: rgba(15,23,42,0.04);
+  --btn-shadow: 0 6px 18px rgba(2,6,23,0.06);
+}
+
+[data-theme="neo"] {
+  --bg: linear-gradient(135deg,#071133 0%,#071427 60%);
+  --page-text: #e6eef8;
+  --card-bg: rgba(6,10,25,0.55);
+  --card-border: rgba(255,255,255,0.04);
+  --btn-shadow: 0 12px 36px rgba(2,6,23,0.6);
+}
+
+/* Card: unified glass style */
+.card {
+  background: var(--card-bg);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  border: 1px solid var(--card-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background: var(--glass-sheen);
+  mix-blend-mode: overlay; z-index: 0;
+}
+.card > * { position: relative; z-index: 1 }
+
+/* subtle hover lift */
+.card:hover { transform: translateY(-6px); transition: transform 220ms ease, box-shadow 220ms ease; box-shadow: 0 22px 60px rgba(2,6,23,0.18); }
+
+/* Hero-like soft variant for cards: reduced blur + tiny brand tint */
+.card.hero {
+  --local-accent: rgba(var(--brand-rgb),0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
+  backdrop-filter: blur(6px) saturate(110%);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.card.hero::before {
+  background: radial-gradient(circle at 10% 20%, var(--local-accent), transparent 28%), radial-gradient(circle at 90% 80%, var(--local-accent), transparent 28%);
+  opacity: 0.5; mix-blend-mode: screen;
+}
+
+/* Transparent card variant: very subtle glass, useful for large background continuity */
+.card.transparent {
+  background: rgba(255,255,255,0.04); /* very low-opacity white */
+  -webkit-backdrop-filter: blur(4px) saturate(105%);
+  backdrop-filter: blur(4px) saturate(105%);
+  border: 1px solid rgba(var(--brand-rgb),0.06);
+  box-shadow: 0 8px 22px rgba(2,6,23,0.06);
+}
+.card.transparent::before { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); mix-blend-mode: overlay; opacity:0.6 }
+
+/* Dark-mode tweak for transparent cards */
+@media (prefers-color-scheme: dark) {
+  .card.transparent { background: rgba(6,10,25,0.36); border: 1px solid rgba(255,255,255,0.04); }
+  .card.transparent::before { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+}
+
+/* Buttons use brand color everywhere */
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white font-medium;
+  background: linear-gradient(90deg, rgba(var(--brand-rgb),0.95), rgba(var(--brand-rgb),0.9));
+  color: #05212a;
+  box-shadow: var(--btn-shadow);
+  border: 1px solid rgba(255,255,255,0.12);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+
+/* Navbar styles */
+.navbar-glass {
+  background: linear-gradient(135deg, rgba(34,211,238,0.16) 0%, rgba(93,211,211,0.18) 35%, rgba(16,185,129,0.14) 70%, rgba(52,211,153,0.12) 100%), 
+              linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.75));
+  backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid rgba(93,211,211,0.12);
+  box-shadow: 0 4px 24px rgba(93,211,211,0.1), 0 2px 6px rgba(34,211,238,0.08);
+}
+.navbar-glass.dark {
+  background: linear-gradient(135deg, rgba(34,211,238,0.20) 0%, rgba(93,211,211,0.22) 35%, rgba(16,185,129,0.18) 70%, rgba(52,211,153,0.16) 100%),
+              linear-gradient(180deg, rgba(4,6,10,0.75), rgba(4,6,10,0.65));
+  border-bottom: 1px solid rgba(93,211,211,0.15);
+  box-shadow: 0 4px 24px rgba(93,211,211,0.14), 0 2px 6px rgba(34,211,238,0.1);
+}
+.brand-mark { box-shadow: 0 8px 30px rgba(var(--brand-rgb),0.12); }
+
+.nav-link { color: rgba(7,17,38,0.7); padding: 6px 8px; font-weight:600; position: relative; transition: color .18s ease; }
+.nav-link:hover { color: var(--brand-color) }
+.nav-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px; background: linear-gradient(90deg, rgba(var(--brand-rgb),0.9), rgba(var(--brand-rgb),0.6)); transform-origin:left; transform: scaleX(0); transition: transform .28s ease; border-radius:999px }
+.nav-link.active::after { transform: scaleX(1) }
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav-link { transition: color .18s ease, transform .18s ease }
+}
+
+/* utility for tailwind-esque class uses */
+.bg-accent { background-color: var(--brand-color) !important }
+.text-accent { color: var(--brand-color) }
+
+/* Dark mode: apply alternate variable set when html has .dark class (Tailwind class strategy) */
+html.dark {
+  --bg: linear-gradient(180deg,#05121a 0%, #071427 60%);
+  --page-text: #e6eef8;
+  --card-bg: rgba(6,10,25,0.6);
+  --card-border: rgba(255,255,255,0.04);
+  --btn-shadow: 0 12px 36px rgba(2,6,23,0.6);
+  --glass-sheen: linear-gradient(120deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+/* A few small explicit dark tweaks for existing utilities */
+html.dark .nav-link { color: rgba(230,238,248,0.9) }
+html.dark .nav-link:hover { color: var(--brand-color) }
+html.dark body { background-image: var(--bg); color: var(--page-text) }
+/* small helpers matching Tailwind-like hover utilities used in markup */
+.hover\:text-accent:hover { color: var(--brand-color) }
+.hover\:bg-accent:hover { background-color: var(--brand-color) }
+
+/* Hero blobs (teal/cyan gradient tints) */
+.hero-blobs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-blob { position: absolute; filter: blur(40px); opacity: 0.22; transform: translate3d(0,0,0); animation: float 8s ease-in-out infinite; }
+.hero-blob.one { width: 420px; height: 420px; background: radial-gradient(circle at 30% 30%, rgba(34,211,238,0.12), rgba(93,211,211,0.08) 30%, transparent 60%); left: -80px; top: -60px; }
+.hero-blob.two { width: 480px; height: 480px; background: radial-gradient(circle at 70% 70%, rgba(93,211,211,0.10), rgba(16,185,129,0.06) 30%, transparent 60%); right: -120px; bottom: -80px; animation-delay: -4s; }
+
+/* Homepage specific background wrapper */
+.home-bg { background-image: var(--bg); }
+
+.typewriter { display: inline-flex; align-items: center; min-height: 1.3em; will-change: contents; contain: content; }
+.typewriter .cursor { display: inline-block; width: 2px; height: 1.2em; background: linear-gradient(180deg, #22d3ee, #5dd3d3); margin-left: 6px; animation: blink 1s steps(2, start) infinite; vertical-align: middle; }
+
+/* Avatar frame using teal/cyan gradient for rings */
+.avatar-frame { position: relative; display:inline-block; border-radius: 9999px; padding: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); }
+.avatar-frame::before, .avatar-frame::after { content: ''; position: absolute; inset: -6px; border-radius: 9999px; z-index: 0; }
+.avatar-frame::before { background: radial-gradient(circle at 20% 20%, rgba(34,211,238,0.32), rgba(93,211,211,0.24) 40%, transparent 60%); filter: blur(12px); }
+.avatar-frame::after { inset: -14px; background: conic-gradient(from 180deg at 50% 50%, rgba(34,211,238,0.20), rgba(93,211,211,0.18) 30%, rgba(16,185,129,0.14) 60%, rgba(52,211,153,0.16) 90%, rgba(34,211,238,0.20)); opacity: 0.85; transform: rotate(0deg); animation: spin-slow 12s linear infinite; }
+
+/* circle avatar variant: use brand ring */
+.avatar-circle {
+  border-radius: 9999px;
+  overflow: hidden;
+  display: inline-block;
+  padding: 4px;
+  background: linear-gradient(135deg, rgba(34,211,238,0.95), rgba(93,211,211,0.9), rgba(16,185,129,0.85));
+}
+.avatar-circle > img { border-radius: 9999px; display:block }
+
+.avatar-inner { position: relative; width: 260px; height: 260px; border-radius: 9999px; overflow: hidden; z-index: 2; box-shadow: 0 18px 50px rgba(93,211,211,0.18); transform-origin: center; transition: transform 420ms cubic-bezier(.2,.9,.2,1); }
+.avatar-frame:hover .avatar-inner { transform: rotate(-6deg) scale(1.03); }
+
+.avatar-badge { position: absolute; left: 8px; bottom: 8px; z-index: 3; background: linear-gradient(135deg, #22d3ee, #5dd3d3, #10b981); color: white; padding: 6px 10px; border-radius: 999px; font-weight:600; font-size:13px; box-shadow: 0 6px 18px rgba(93,211,211,0.24); }
+
+.avatar-overlay { position: absolute; right: 10px; top: 10px; z-index: 4; display:flex; gap:6px }
+
+/* helper to shift avatar slightly left */
+.shift-left { transform: translateX(-20px); }
+
+/* Hero enhancements */
+.hero-title { background: linear-gradient(90deg, rgba(var(--brand-rgb),1), rgba(0,0,0,0.85)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-name-gradient { background: linear-gradient(90deg, rgba(var(--brand-rgb),1), rgba(24,64,64,0.9)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-subtle { color: rgba(7,17,38,0.7); }
+
+.subtitle-underline { position: relative; display: inline-block; }
+.subtitle-underline::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -6px; height: 3px;
+  background: linear-gradient(90deg, rgba(var(--brand-rgb),0.9), rgba(var(--brand-rgb),0.6));
+  border-radius: 999px; transform-origin: left; transform: scaleX(0); transition: transform .4s cubic-bezier(.2,.9,.2,1);
+}
+.subtitle-underline.active::after { transform: scaleX(1); }
+
+.cta-ghost { padding: .5rem 1rem; border-radius: .6rem; border: 1px solid rgba(7,17,38,0.06); background: transparent; }
+.cta-ghost:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(2,6,23,0.08); }
+
+.btn-primary { transition: transform .18s ease, box-shadow .18s ease; }
+.btn-primary:active { transform: translateY(1px) scale(.998); }
+
+/* small badges under hero */
+.hero-badges { display:flex; gap:.6rem; margin-top:1rem; flex-wrap:wrap }
+.hero-badge { padding:.35rem .6rem; border-radius:999px; background: rgba(var(--brand-rgb),0.08); color: var(--page-text); font-weight:600; font-size:.9rem }
+
+@keyframes blink { to { visibility: hidden; } }
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(20px, -20px, 0); }
+}

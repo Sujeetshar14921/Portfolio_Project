@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDE Portfolio</title>
+    <link rel="icon" href="/favicon.ico" />
+    <script>
+      // Initialize theme early to avoid flash: apply saved site-theme and dark mode
+      try {
+        const siteTheme = localStorage.getItem('site-theme')
+        if (siteTheme) document.documentElement.setAttribute('data-theme', siteTheme)
+        const dark = localStorage.getItem('theme')
+        if (dark === 'dark') document.documentElement.classList.add('dark')
+        else document.documentElement.classList.remove('dark')
+      } catch (e) { /* ignore */ }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

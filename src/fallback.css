@@ -1,0 +1,30 @@
+/* Minimal fallback styles so the app can run without Tailwind configured. Replace with full Tailwind in production. */
+.html, body, #root { height: 100%; }
+body { font-family: Poppins, Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background: linear-gradient(180deg,#eef9fb 0%, #f7feff 50%); color:#071126; }
+.container { max-width: 1024px; margin: 0 auto; padding: 1rem; }
+.card { background: rgba(255,255,255,0.06); padding: 1rem; border-radius: 12px; box-shadow: 0 6px 18px rgba(2,6,23,0.12); }
+a { color: #5dd3d3 }
+h1, h2, h3, h4 { color: #071126 }
+.text-accent { color: #5dd3d3 }
+.rounded-md { border-radius: 8px }
+.p-3 { padding: 0.75rem }
+.p-4 { padding: 1rem }
+.mt-2 { margin-top: 0.5rem }
+.mt-3 { margin-top: 0.75rem }
+.mt-4 { margin-top: 1rem }
+.mt-6 { margin-top: 1.5rem }
+.flex { display:flex }
+.grid { display:grid }
+.gap-4 { gap:1rem }
+.gap-6 { gap:1.5rem }
+.items-center { align-items:center }
+.justify-between { justify-content:space-between }
+.hidden { display:none }
+@media (min-width: 768px) {
+  .hidden.md\:flex { display:flex }
+}
+.w-56 { width: 14rem }
+.h-56 { height: 14rem }
+.rounded-full { border-radius:9999px }
+.overflow-hidden { overflow:hidden }
+.object-cover { object-fit:cover }
