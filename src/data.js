@@ -25,7 +25,7 @@ export const projects = [
     id: 'proj-1',
     title: 'Portfolio Website',
     description: 'A scalable web app with real-time features.',
-    image: '../images/Project1.png',
+    image: 'src/images/Project1.png',
     demo: '/Portfolio_Project/sujeetshar14921.github.io/Portfolio_Project',
     repo: 'https://github.com/Sujeetshar14921/Portfolio_Project'
   },
